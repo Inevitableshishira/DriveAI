@@ -1,6 +1,7 @@
 import { StrictMode, useEffect } from 'react'
 import { createRoot } from 'react-dom/client'
 import Lenis from 'lenis'
+import { TooltipProvider } from '@/components/ui/tooltip'
 import './index.css'
 import App from './App.tsx'
 
@@ -31,7 +32,9 @@ function LenisProvider({ children }: { children: React.ReactNode }) {
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <LenisProvider>
-      <App />
+      <TooltipProvider>
+        <App />
+      </TooltipProvider>
     </LenisProvider>
   </StrictMode>,
 )
