@@ -1,119 +1,133 @@
-import { motion } from 'framer-motion';
-import { ChevronDown, Zap, Shield, Gauge } from 'lucide-react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { ChevronDown } from 'lucide-react';
+import { useRef } from 'react';
 
 interface HeroProps {
   onExplore: () => void;
 }
 
 export function Hero({ onExplore }: HeroProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end start"]
+  });
+
+  const y = useTransform(scrollYProgress, [0, 1], [0, 200]);
+  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 1.1]);
+
   return (
-    <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-dark/50 to-dark" />
+    <section 
+      ref={containerRef}
+      id="hero" 
+      className="relative min-h-[100vh] flex items-center justify-center overflow-hidden"
+    >
+      <div className="absolute inset-0 hero-gradient" />
       
-      <div className="absolute inset-0 opacity-20">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-cyan-500/30 rounded-full blur-[128px]" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-500/30 rounded-full blur-[128px]" />
-      </div>
-
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        className="relative z-10 text-center px-4 max-w-5xl mx-auto"
+      <motion.div 
+        style={{ y, scale, opacity }}
+        className="absolute inset-0"
       >
-        <motion.div
-          initial={{ scale: 0.8, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ delay: 0.2, duration: 0.5 }}
-          className="inline-flex items-center gap-2 px-4 py-2 bg-cyan-500/10 rounded-full border border-cyan-500/20 mb-8"
-        >
-          <Zap className="w-4 h-4 text-cyan-400" />
-          <span className="text-cyan-400 text-sm font-medium">AI-Powered Car Discovery</span>
-        </motion.div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px]">
+          <motion.div 
+            animate={{ 
+              scale: [1, 1.1, 1],
+              opacity: [0.3, 0.5, 0.3]
+            }}
+            transition={{ 
+              duration: 8, 
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+            className="w-full h-full rounded-full bg-gradient-radial from-blue-500/20 via-transparent to-transparent blur-[120px]"
+          />
+        </div>
+      </motion.div>
 
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-          className="text-5xl md:text-7xl lg:text-8xl font-bold mb-6"
-        >
-          <span className="bg-gradient-to-r from-white via-cyan-100 to-white bg-clip-text text-transparent">
-            The Future of
-          </span>
-          <br />
-          <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-cyan-400 bg-clip-text text-transparent glow-text">
-            Intelligent Driving
-          </span>
-        </motion.h1>
-
+      <div className="section-container relative z-10 text-center max-w-[980px]">
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-          className="text-lg md:text-xl text-white/60 mb-12 max-w-2xl mx-auto"
+          transition={{ delay: 0.2, duration: 0.8 }}
+          className="text-[#86868b] text-[17px] md:text-[19px] tracking-wide mb-6"
         >
-          Experience the next generation of electric vehicles with AI that understands your needs. 
-          From purchase to driving, we're with you every kilometer.
+          Introducing
+        </motion.p>
+
+        <motion.h1
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3, duration: 0.8 }}
+          className="text-5xl md:text-7xl lg:text-[84px] font-semibold tracking-tight mb-6"
+        >
+          <span className="text-gradient">DriveAI</span>
+        </motion.h1>
+
+        <motion.p
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4, duration: 0.8 }}
+          className="text-[#86868b] text-[19px] md:text-[28px] font-normal leading-tight mb-8 max-w-[750px] mx-auto"
+        >
+          The future of electric mobility, powered by intelligence that understands you.
         </motion.p>
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
+          transition={{ delay: 0.5, duration: 0.8 }}
           className="flex flex-col sm:flex-row gap-4 justify-center mb-16"
         >
-          <motion.button
-            whileHover={{ scale: 1.05, boxShadow: '0 0 30px rgba(0, 210, 255, 0.5)' }}
-            whileTap={{ scale: 0.95 }}
+          <button
             onClick={onExplore}
-            className="px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-xl font-semibold text-white shadow-lg shadow-cyan-500/25 cursor-pointer"
+            className="apple-button-primary"
           >
             Explore Models
-          </motion.button>
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="px-8 py-4 glass rounded-xl font-semibold text-white cursor-pointer"
-          >
-            Watch Film
-          </motion.button>
+          </button>
+          <button className="apple-button-secondary">
+            Watch the Film
+          </button>
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.8 }}
-          className="grid grid-cols-3 gap-8 max-w-lg mx-auto"
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.6, duration: 0.8 }}
+          className="grid grid-cols-3 gap-12 md:gap-20 max-w-[600px] mx-auto"
         >
           {[
-            { icon: Zap, value: '520', unit: 'km Range', label: 'Velox GT' },
-            { icon: Gauge, value: '2.8', unit: 'Seconds', label: '0-100 km/h' },
-            { icon: Shield, value: '5', unit: 'Star Rating', label: 'Safety' }
+            { value: '520', unit: 'km', label: 'Range' },
+            { value: '2.8', unit: 'sec', label: '0-100 km/h' },
+            { value: '5', unit: '★', label: 'Safety Rating' }
           ].map((stat, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6 + index * 0.1 }}
+              transition={{ delay: 0.7 + index * 0.1 }}
               className="text-center"
             >
-              <stat.icon className="w-6 h-6 text-cyan-400 mx-auto mb-2" />
-              <div className="text-3xl font-bold text-white">{stat.value}</div>
-              <div className="text-sm text-cyan-400">{stat.unit}</div>
-              <div className="text-xs text-white/40">{stat.label}</div>
+              <div className="text-4xl md:text-5xl font-semibold text-gradient mb-1">
+                {stat.value}
+                <span className="text-2xl md:text-3xl text-[#86868b] ml-1">{stat.unit}</span>
+              </div>
+              <div className="text-[#86868b] text-[14px] md:text-[17px]">{stat.label}</div>
             </motion.div>
           ))}
         </motion.div>
-      </motion.div>
+      </div>
 
       <motion.div
-        animate={{ y: [0, 10, 0] }}
-        transition={{ duration: 2, repeat: Infinity }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 cursor-pointer"
+        animate={{ y: [0, 8, 0] }}
+        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute bottom-12 left-1/2 -translate-x-1/2 cursor-pointer"
         onClick={onExplore}
       >
-        <ChevronDown className="w-8 h-8 text-white/50" />
+        <ChevronDown className="w-8 h-8 text-[#86868b]" />
       </motion.div>
+
+      <div className="absolute bottom-0 left-0 right-0 h-[200px] bg-gradient-to-t from-black to-transparent" />
     </section>
   );
 }

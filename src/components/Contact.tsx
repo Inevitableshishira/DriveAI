@@ -1,150 +1,107 @@
 import { motion } from 'framer-motion';
-import { MapPin, Phone, Mail, Clock, MessageCircle } from 'lucide-react';
+import { Mail, Phone, MapPin, Clock, ArrowRight, X, Globe } from 'lucide-react';
 
 export function Contact() {
   return (
-    <section id="contact" className="py-24 px-4 relative">
-      <div className="absolute inset-0 bg-gradient-to-b from-dark to-surface/50" />
+    <section id="contact" className="py-24 md:py-32 relative">
+      <div className="absolute inset-0 bg-black" />
       
-      <div className="max-w-7xl mx-auto relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
-              Get In Touch
-            </span>
-          </h2>
-          <p className="text-white/60 max-w-2xl mx-auto">
-            Have questions about DriveAI? Our team is here to help you make the switch to electric.
-          </p>
-        </motion.div>
-
-        <div className="grid lg:grid-cols-3 gap-8">
+      <div className="section-container relative z-10">
+        <div className="grid lg:grid-cols-2 gap-16">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="lg:col-span-2 glass rounded-2xl p-8"
           >
-            <form className="space-y-6">
-              <div className="grid md:grid-cols-2 gap-6">
-                <div>
-                  <label className="text-white/70 text-sm mb-2 block">Full Name</label>
-                  <input
-                    type="text"
-                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-all"
-                    placeholder="Your name"
-                  />
-                </div>
-                <div>
-                  <label className="text-white/70 text-sm mb-2 block">Email</label>
-                  <input
-                    type="email"
-                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-all"
-                    placeholder="you@example.com"
-                  />
-                </div>
-              </div>
+            <h2 className="text-4xl md:text-5xl font-semibold tracking-tight mb-6">
+              <span className="text-gradient">Get in Touch</span>
+            </h2>
+            <p className="text-[#86868b] text-[17px] mb-10 max-w-[400px]">
+              Have questions? Our team is here to help you find the perfect DriveAI for your lifestyle.
+            </p>
 
-              <div>
-                <label className="text-white/70 text-sm mb-2 block">Subject</label>
-                <input
-                  type="text"
-                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-all"
-                  placeholder="How can we help?"
-                />
-              </div>
-
-              <div>
-                <label className="text-white/70 text-sm mb-2 block">Message</label>
-                <textarea
-                  rows={5}
-                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-all resize-none"
-                  placeholder="Your message..."
-                />
-              </div>
-
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="w-full py-4 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-xl font-semibold text-white cursor-pointer"
-              >
-                Send Message
-              </motion.button>
-            </form>
-          </motion.div>
-
-          <div className="space-y-6">
-            {[
-              {
-                icon: MapPin,
-                title: 'Headquarters',
-                details: ['DriveAI India Pvt. Ltd.', 'Tower A, Tech Park', 'Kochi, Kerala 682036']
-              },
-              {
-                icon: Phone,
-                title: 'Phone',
-                details: ['+91 484 123 4567', 'Mon-Sat: 9AM-8PM']
-              },
-              {
-                icon: Mail,
-                title: 'Email',
-                details: ['hello@driveai.in', 'support@driveai.in']
-              },
-              {
-                icon: Clock,
-                title: 'Business Hours',
-                details: ['Monday - Saturday', '9:00 AM - 8:00 PM IST']
-              }
-            ].map((item, index) => (
-              <motion.div
-                key={item.title}
-                initial={{ opacity: 0, x: 30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="glass rounded-xl p-5"
-              >
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 bg-gradient-to-br from-cyan-500/20 to-blue-500/20 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <item.icon className="w-5 h-5 text-cyan-400" />
+            <div className="space-y-6">
+              {[
+                { icon: Mail, label: 'Email', value: 'hello@driveai.in' },
+                { icon: Phone, label: 'Phone', value: '+91 1800 123 4567' },
+                { icon: MapPin, label: 'Headquarters', value: 'Mumbai, Maharashtra, India' },
+                { icon: Clock, label: 'Support Hours', value: '24/7 AI Assistant, 9am-9pm Human' },
+              ].map((item, i) => (
+                <motion.div
+                  key={item.label}
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1 }}
+                  className="flex items-center gap-4"
+                >
+                  <div className="w-12 h-12 bg-[#1d1d1f] rounded-xl flex items-center justify-center">
+                    <item.icon className="w-5 h-5 text-[#0071e3]" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-white mb-1">{item.title}</h3>
-                    {item.details.map((detail, i) => (
-                      <p key={i} className="text-sm text-white/60">{detail}</p>
-                    ))}
+                    <div className="text-[14px] text-[#86868b]">{item.label}</div>
+                    <div className="text-[17px] font-medium text-white">{item.value}</div>
                   </div>
-                </div>
-              </motion.div>
-            ))}
+                </motion.div>
+              ))}
+            </div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="glass rounded-xl p-5 bg-gradient-to-br from-cyan-500/10 to-blue-500/10"
-            >
-              <div className="flex items-center gap-3 mb-3">
-                <MessageCircle className="w-5 h-5 text-cyan-400" />
-                <span className="font-semibold text-white">Live Chat</span>
-              </div>
-              <p className="text-sm text-white/60 mb-3">
-                Get instant answers from our AI assistant or connect with a human advisor.
-              </p>
+            <div className="flex gap-4 mt-10">
+              {[
+                { icon: X, href: '#' },
+                { icon: Globe, href: '#' },
+                { icon: Globe, href: '#' },
+                { icon: Globe, href: '#' },
+              ].map((social, i) => (
+                <motion.a
+                  key={i}
+                  href={social.href}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.4 + i * 0.05 }}
+                  whileHover={{ scale: 1.1 }}
+                  className="w-10 h-10 bg-[#1d1d1f] hover:bg-[#2d2d2f] rounded-full flex items-center justify-center transition-colors"
+                >
+                  <social.icon className="w-5 h-5 text-[#86868b]" />
+                </motion.a>
+              ))}
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="glass-card rounded-3xl p-8 md:p-10"
+          >
+            <h3 className="text-[21px] font-semibold text-white mb-6">Subscribe to Updates</h3>
+            <p className="text-[#86868b] text-[15px] mb-6">
+              Get the latest on new models, features, and exclusive offers delivered to your inbox.
+            </p>
+            
+            <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
+              <input
+                type="email"
+                placeholder="Enter your email"
+                className="w-full bg-[#1d1d1f] rounded-xl px-4 py-3.5 text-white placeholder-[#6e6e73] focus:outline-none focus:ring-2 focus:ring-[#0071e3] transition-all"
+              />
               <motion.button
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="w-full py-2 bg-white/10 rounded-lg text-sm font-medium text-cyan-400 cursor-pointer"
+                type="submit"
+                className="apple-button-primary w-full flex items-center justify-center gap-2"
               >
-                Start Chat
+                Subscribe
+                <ArrowRight className="w-4 h-4" />
               </motion.button>
-            </motion.div>
-          </div>
+            </form>
+
+            <p className="text-[#6e6e73] text-[12px] mt-4">
+              By subscribing, you agree to receive marketing communications. Unsubscribe anytime.
+            </p>
+          </motion.div>
         </div>
       </div>
     </section>
@@ -152,30 +109,24 @@ export function Contact() {
 }
 
 export function Footer() {
-  const currentYear = new Date().getFullYear();
-
   return (
-    <footer className="py-12 px-4 border-t border-white/10">
-      <div className="max-w-7xl mx-auto">
+    <footer className="py-12 border-t border-[#424245]/30">
+      <div className="section-container">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="flex items-center gap-2">
-            <div className="w-10 h-10 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-xl flex items-center justify-center">
-              <span className="text-white font-bold text-lg">D</span>
-            </div>
-            <span className="font-bold text-xl bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
-              DriveAI
-            </span>
+          <div className="text-[21px] font-semibold">
+            <span className="text-gradient">DriveAI</span>
           </div>
-
-          <div className="flex flex-wrap gap-6 text-sm text-white/50">
-            <a href="#" className="hover:text-white transition-colors cursor-pointer">Privacy Policy</a>
-            <a href="#" className="hover:text-white transition-colors cursor-pointer">Terms of Service</a>
-            <a href="#" className="hover:text-white transition-colors cursor-pointer">Cookie Policy</a>
-            <a href="#" className="hover:text-white transition-colors cursor-pointer">Careers</a>
+          
+          <div className="flex flex-wrap justify-center gap-8 text-[14px] text-[#86868b]">
+            {['Privacy Policy', 'Terms of Service', 'Cookie Settings', 'Accessibility'].map((link) => (
+              <a key={link} href="#" className="hover:text-white transition-colors">
+                {link}
+              </a>
+            ))}
           </div>
-
-          <div className="text-sm text-white/40">
-            © {currentYear} DriveAI. All rights reserved.
+          
+          <div className="text-[14px] text-[#6e6e73]">
+            © 2024 DriveAI. All rights reserved.
           </div>
         </div>
       </div>

@@ -1,177 +1,151 @@
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
+import { Check, Sparkles, Zap } from 'lucide-react';
 import { cars, formatPrice } from '../data/cars';
-import { Check, Sparkles } from 'lucide-react';
 
 interface PricingProps {
   currency: 'INR' | 'USD';
   onCurrencyChange: (currency: 'INR' | 'USD') => void;
 }
 
+const PLANS = [
+  { id: 'base', name: 'Standard', badge: null },
+  { id: 'plus', name: 'Plus', badge: 'Popular', badgeColor: 'bg-[#0071e3]' },
+  { id: 'pro', name: 'Pro', badge: 'Best Value', badgeColor: 'bg-[#bf5af2]' },
+];
+
 export function Pricing({ currency, onCurrencyChange }: PricingProps) {
-  const [selectedModel, setSelectedModel] = useState<string | null>(null);
+  const [selectedPlan, setSelectedPlan] = useState('plus');
 
   return (
-    <section id="pricing" className="py-24 px-4 relative">
-      <div className="absolute inset-0 bg-gradient-to-b from-dark via-surface/30 to-dark" />
+    <section id="pricing" className="py-24 md:py-32 relative">
+      <div className="absolute inset-0 bg-gradient-to-b from-black via-[#0a0a0a] to-black" />
       
-      <div className="max-w-7xl mx-auto relative z-10">
+      <div className="section-container relative z-10">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-12"
+          className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
-              Transparent Pricing
-            </span>
+          <h2 className="text-4xl md:text-6xl font-semibold tracking-tight mb-4">
+            <span className="text-gradient">Choose Your Plan</span>
           </h2>
-          <p className="text-white/60 max-w-2xl mx-auto mb-8">
-            No hidden fees, no surprises. Every DriveAI comes with our comprehensive warranty and support package.
+          <p className="text-[#86868b] text-[17px] md:text-[19px] max-w-2xl mx-auto">
+            Select the ownership experience that matches your lifestyle.
           </p>
+        </motion.div>
 
-          <div className="inline-flex items-center gap-2 p-1 glass rounded-xl">
-            <motion.button
-              whileTap={{ scale: 0.95 }}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="flex justify-center mb-12"
+        >
+          <div className="inline-flex bg-[#1d1d1f] p-1 rounded-full">
+            <button
               onClick={() => onCurrencyChange('INR')}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-all cursor-pointer ${
-                currency === 'INR'
-                  ? 'bg-gradient-to-r from-cyan-500 to-blue-500 text-white'
-                  : 'text-white/60 hover:text-white'
+              className={`px-5 py-2 rounded-full text-[14px] font-medium transition-all ${
+                currency === 'INR' 
+                  ? 'bg-white text-black' 
+                  : 'text-[#86868b] hover:text-white'
               }`}
             >
-              INR (₹)
-            </motion.button>
-            <motion.button
-              whileTap={{ scale: 0.95 }}
+              INR
+            </button>
+            <button
               onClick={() => onCurrencyChange('USD')}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-all cursor-pointer ${
-                currency === 'USD'
-                  ? 'bg-gradient-to-r from-cyan-500 to-blue-500 text-white'
-                  : 'text-white/60 hover:text-white'
+              className={`px-5 py-2 rounded-full text-[14px] font-medium transition-all ${
+                currency === 'USD' 
+                  ? 'bg-white text-black' 
+                  : 'text-[#86868b] hover:text-white'
               }`}
             >
-              USD ($)
-            </motion.button>
+              USD
+            </button>
           </div>
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-8">
-          {cars.map((car, index) => (
+        <div className="grid md:grid-cols-3 gap-6 max-w-[1100px] mx-auto">
+          {PLANS.map((plan, index) => (
             <motion.div
-              key={car.id}
-              initial={{ opacity: 0, y: 30 }}
+              key={plan.id}
+              initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
-              whileHover={{ y: -5 }}
-              onClick={() => setSelectedModel(selectedModel === car.id ? null : car.id)}
-              className={`glass rounded-2xl p-6 cursor-pointer transition-all ${
-                selectedModel === car.id ? 'ring-2 ring-cyan-400' : ''
+              whileHover={{ y: -4 }}
+              onClick={() => setSelectedPlan(plan.id)}
+              className={`glass-card rounded-3xl p-8 cursor-pointer transition-all ${
+                selectedPlan === plan.id 
+                  ? 'ring-2 ring-[#0071e3]' 
+                  : ''
               }`}
             >
-              <div className="flex gap-6">
-                <img
-                  src={car.image}
-                  alt={car.name}
-                  className="w-32 h-24 object-cover rounded-xl"
-                />
-                <div className="flex-1">
-                  <div className="flex items-start justify-between mb-2">
-                    <div>
-                      <h3 className="text-xl font-bold text-white">{car.name}</h3>
-                      <p className="text-sm text-white/50">{car.tagline}</p>
-                    </div>
-                    {car.isFlagship && (
-                      <span className="px-2 py-1 bg-amber-500/20 rounded text-xs text-amber-400 flex items-center gap-1">
-                        <Sparkles className="w-3 h-3" />
-                        Flagship
-                      </span>
-                    )}
-                  </div>
-
-                  <motion.div
-                    initial={false}
-                    animate={{ height: selectedModel === car.id ? 'auto' : 0, opacity: selectedModel === car.id ? 1 : 0 }}
-                    className="overflow-hidden"
-                  >
-                    <div className="pt-4 space-y-4">
-                      <div className="grid grid-cols-2 gap-4">
-                        {[
-                          { label: 'Range', value: car.range },
-                          { label: 'Power', value: car.power },
-                          { label: '0-100', value: car.acceleration },
-                          { label: 'Top Speed', value: car.topSpeed }
-                        ].map((spec) => (
-                          <div key={spec.label} className="bg-white/5 rounded-lg p-3">
-                            <div className="text-cyan-400 font-bold">{spec.value}</div>
-                            <div className="text-xs text-white/40">{spec.label}</div>
-                          </div>
-                        ))}
-                      </div>
-
-                      <div className="flex flex-wrap gap-2">
-                        {car.features.map((feature) => (
-                          <span
-                            key={feature}
-                            className="px-2 py-1 bg-white/10 rounded text-xs text-white/70 flex items-center gap-1"
-                          >
-                            <Check className="w-3 h-3 text-green-400" />
-                            {feature}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  </motion.div>
-
-                  <div className="flex items-center justify-between mt-4">
-                    <div>
-                      <div className="text-sm text-white/40">Starting from</div>
-                      <div className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
-                        {formatPrice(car.priceInr, currency)}
-                      </div>
-                    </div>
-                    <motion.button
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                      }}
-                      className="px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-lg font-medium text-white text-sm cursor-pointer"
-                    >
-                      Configure
-                    </motion.button>
-                  </div>
+              {plan.badge && (
+                <div className={`inline-flex items-center gap-1.5 px-3 py-1 ${plan.badgeColor} rounded-full text-[11px] font-medium text-white mb-4`}>
+                  <Sparkles className="w-3 h-3" />
+                  {plan.badge}
                 </div>
+              )}
+
+              <h3 className="text-[21px] font-semibold text-white mb-2">{plan.name}</h3>
+              <p className="text-[#86868b] text-[14px] mb-6">
+                {plan.id === 'base' && 'Essential ownership experience'}
+                {plan.id === 'plus' && 'Most popular choice'}
+                {plan.id === 'pro' && 'Ultimate luxury package'}
+              </p>
+
+              <div className="mb-6">
+                <span className="text-[48px] font-semibold text-gradient">
+                  {currency === 'INR' ? '₹' : '$'}
+                  {plan.id === 'base' ? '45' : plan.id === 'plus' ? '65' : '85'}
+                  <span className="text-[21px] text-[#86868b] font-normal">L</span>
+                </span>
+                <span className="text-[#86868b] text-[14px] block mt-1">Starting price{currency === 'USD' ? '/year' : ''}</span>
               </div>
+
+              <ul className="space-y-3 mb-8">
+                {[
+                  'AI Assistant included',
+                  'Over-the-air updates',
+                  '24/7 Roadside assistance',
+                  plan.id !== 'base' && 'Premium connectivity',
+                  plan.id === 'pro' && 'Concierge service',
+                  plan.id === 'pro' && 'Annual detailing',
+                ].filter(Boolean).map((item, i) => (
+                  <li key={i} className="flex items-center gap-3 text-[14px] text-[#f5f5f7]">
+                    <Check className="w-4 h-4 text-[#30d158]" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className={`w-full py-3 rounded-full text-[15px] font-medium transition-all ${
+                  selectedPlan === plan.id
+                    ? 'bg-[#0071e3] text-white'
+                    : 'bg-[#1d1d1f] text-[#f5f5f7] hover:bg-[#2d2d2f]'
+                }`}
+              >
+                {selectedPlan === plan.id ? 'Selected' : 'Select Plan'}
+              </motion.button>
             </motion.div>
           ))}
         </div>
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mt-16 glass rounded-2xl p-8 text-center"
+          className="mt-16 text-center"
         >
-          <h3 className="text-2xl font-bold text-white mb-4">What's Included with Every DriveAI</h3>
-          <div className="grid md:grid-cols-4 gap-6">
-            {[
-              { title: '8 Year Warranty', desc: 'Comprehensive coverage on battery and motor' },
-              { title: 'Free Charging', desc: '2 years of complimentary fast charging' },
-              { title: 'Roadside Assist', desc: '24/7 pan-India support included' },
-              { title: 'Home Installation', desc: 'Free home charger setup' }
-            ].map((item) => (
-              <div key={item.title} className="text-center">
-                <div className="w-12 h-12 bg-gradient-to-br from-cyan-500/20 to-blue-500/20 rounded-xl flex items-center justify-center mx-auto mb-3">
-                  <Check className="w-6 h-6 text-cyan-400" />
-                </div>
-                <h4 className="font-semibold text-white mb-1">{item.title}</h4>
-                <p className="text-sm text-white/50">{item.desc}</p>
-              </div>
-            ))}
-          </div>
+          <p className="text-[#86868b] text-[14px]">
+            All prices are ex-showroom. On-road costs vary by location. 
+            <a href="#contact" className="text-[#0071e3] hover:underline ml-1">Contact us</a> for personalized quotes.
+          </p>
         </motion.div>
       </div>
     </section>

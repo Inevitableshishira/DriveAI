@@ -43,7 +43,12 @@ function App() {
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      const lenis = (window as any).lenis;
+      if (lenis) {
+        lenis.scrollTo(element, { duration: 1.5 });
+      } else {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
     }
   };
 
@@ -82,7 +87,7 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-dark">
+    <div className="min-h-screen bg-black">
       <Navigation activeSection={activeSection} />
       
       <Hero onExplore={() => scrollToSection('models')} />

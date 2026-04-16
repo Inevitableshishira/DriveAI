@@ -10,6 +10,7 @@ export interface Car {
   topSpeed: string;
   features: string[];
   image: string;
+  safetyRating: number;
   isFlagship?: boolean;
 }
 
@@ -26,6 +27,7 @@ export const cars: Car[] = [
     topSpeed: '320 km/h',
     features: ['Dual Motor AWD', 'Autopilot Pro', 'Panoramic Roof', 'Premium Audio'],
     image: 'https://images.unsplash.com/photo-1617788138017-80ad40651399?w=800&h=500&fit=crop',
+    safetyRating: 5,
     isFlagship: true
   },
   {
@@ -39,7 +41,8 @@ export const cars: Car[] = [
     acceleration: '4.2s',
     topSpeed: '250 km/h',
     features: ['All-Terrain Drive', '7 Seater', 'Towing Package', 'Off-Road Mode'],
-    image: 'https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=800&h=500&fit=crop'
+    image: 'https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=800&h=500&fit=crop',
+    safetyRating: 5
   },
   {
     id: 'aurora-s',
@@ -52,7 +55,8 @@ export const cars: Car[] = [
     acceleration: '3.8s',
     topSpeed: '280 km/h',
     features: ['Executive Lounge', 'Ambient Lighting', 'Massage Seats', 'Privacy Glass'],
-    image: 'https://images.unsplash.com/photo-1555215695-3004980ad54e?w=800&h=500&fit=crop'
+    image: 'https://images.unsplash.com/photo-1555215695-3004980ad54e?w=800&h=500&fit=crop',
+    safetyRating: 5
   },
   {
     id: 'ion-pro',
@@ -65,7 +69,8 @@ export const cars: Car[] = [
     acceleration: '5.1s',
     topSpeed: '220 km/h',
     features: ['Compact Design', 'Fast Charging', 'City Mode', 'Smart Connect'],
-    image: 'https://images.unsplash.com/photo-1560958089-b8a1929cea89?w=800&h=500&fit=crop'
+    image: 'https://images.unsplash.com/photo-1560958089-b8a1929cea89?w=800&h=500&fit=crop',
+    safetyRating: 4
   },
   {
     id: 'terra-max',
@@ -78,7 +83,8 @@ export const cars: Car[] = [
     acceleration: '4.5s',
     topSpeed: '260 km/h',
     features: ['8 Seater', 'Entertainment System', 'Climate Control', '360 Camera'],
-    image: 'https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=800&h=500&fit=crop'
+    image: 'https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=800&h=500&fit=crop',
+    safetyRating: 5
   },
   {
     id: 'spark-ev',
@@ -91,7 +97,8 @@ export const cars: Car[] = [
     acceleration: '6.5s',
     topSpeed: '180 km/h',
     features: ['Budget-Friendly', 'Low Maintenance', 'City Optimized', 'Easy Charging'],
-    image: 'https://images.unsplash.com/photo-1593941707882-a5bba14938c7?w=800&h=500&fit=crop'
+    image: 'https://images.unsplash.com/photo-1593941707882-a5bba14938c7?w=800&h=500&fit=crop',
+    safetyRating: 4
   }
 ];
 
